@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Education.models import BaseUser, Teacher, Student
+from Education.models import BaseUser, Teacher, Student, Course, Lecture
 
 
 @admin.register(BaseUser)
@@ -15,3 +15,13 @@ class TeacherAdmin(admin.ModelAdmin):
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', 'level')
+
+
+@admin.register(Lecture)
+class LectureAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
