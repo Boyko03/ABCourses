@@ -33,8 +33,14 @@ class Course(models.Model):
     ]
     level = models.CharField(max_length=255, choices=LEVELS, default=BEGINER)
 
+    def __str__(self):
+        return f'Course {self.name}'
+
 
 class Lecture(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
     course = models.ForeignKey('Course', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Lecture "{self.name}"'

@@ -1,0 +1,25 @@
+{% extends "courses/base.html" %} {% block content %}
+<h2>Information about "{{ course.name }}"</h2>
+
+{% if lectures %}
+<table>
+    <tr>
+        <th>Lecture Name</th>
+        <th>Lecture desription </th>
+    </tr>
+    {% for lecture in lectures %}
+        <tr>
+            <td>
+                <a href="{% url 'Education:courses:detail' course.id %}">{{ lecture.name }}</a>
+                <a href="{% url 'Education:courses:edit' course.id %}">Edit</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+ 
+{% else %}
+    Currently there are no lectures
+{% endif  %}
+
+
+{% endblock %}
