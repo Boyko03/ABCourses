@@ -2,24 +2,7 @@
 
 {% if courses %}
 
-<style>
-table, th, td {
-  border: 0.5px solid gray;
-}
-
-table.center {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-th, td {
-  padding: 6px;
-}
-</style>
-
-
-
-<table style="width:60%" class="center">
+<table class="center">
 <!-- <table style="background-color:#00FF00"> -->
     <tr>
         <th style="text-align:center;">Course Name</th>
@@ -37,8 +20,6 @@ th, td {
             <td style="text-align:center;">{{ course.description }}</td>
             <td style="text-align:center;"><a href="{% url 'Education:courses:edit' course.id %}"><button type="button" class="btn btn-info btn-sm">Edit</button></a></td>
             <td style="text-align:center;"><form method="POST" action="{% url 'Education:courses:delete' course.id %}">{% csrf_token %}<button type=button class="btn btn-info btn-sm">Delete</button></form></td>
-
-
         </tr>
     {% endfor %}
 </table>
