@@ -1,25 +1,48 @@
 {% extends "courses/base.html" %} {% block content %}
-<h2>Information about "{{ course.name }}"</h2>
+
+<h2><p class="font-weight text-center">Lectures for "{{ course.name }}"</p></h2>
+
+<br style = “line-height:5;”><br>
+
 
 {% if lectures %}
-<table>
+<style>
+table, th, td {
+  border: 0.5px solid gray;
+}
+
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+th, td {
+  padding: 6px;
+}
+</style>
+
+
+
+<table style="width:60%" class="center">
     <tr>
-        <th>Lecture Name</th>
-        <th>Lecture desription </th>
+        <th style="text-align:center;">Lecture Name</th>
+        <th style="text-align:center;">Description</th>
     </tr>
     {% for lecture in lectures %}
         <tr>
-            <td>
-                <a href="{% url 'Education:courses:detail' course.id %}">{{ lecture.name }}</a>
-                <a href="{% url 'Education:courses:edit' course.id %}">Edit</a>
-            </td>
+            <td style="text-align:left;">{{ lecture.name }}</td>
+            <td style="text-align:center;">{{ lecture.description }}</td>
         </tr>
     {% endfor %}
 </table>
+
  
 {% else %}
-    Currently there are no lectures
+<p class="font-weight text-center">Currently there are no lectures</p>
+
 {% endif  %}
 
+<p class="font-weight text-right"><a href="{% url 'Education:courses:create_lecture' course.id %}"><button type="button" class="btn btn-info">Add new lecture</button></a>
+</p>
 
 {% endblock %}

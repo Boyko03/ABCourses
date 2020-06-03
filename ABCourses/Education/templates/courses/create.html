@@ -1,7 +1,11 @@
-<h3>Add new course</h3>
+{% extends "courses/base.html" %} {% block content %}
+
+<h4>Add new course</h4>
 
 <form method="POST">
   {% csrf_token %}
   {{ form.as_p }}
   <input type="Submit" name="Save" />
 </form>
+
+{% endblock %}

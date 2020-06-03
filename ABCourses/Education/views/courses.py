@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import CreateView, UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
-from Education.models import Course
+from Education.models import Course, Lecture
 
 
 def list(request):
@@ -12,12 +12,19 @@ def list(request):
 
 def detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
-    return render(request, 'courses/detail.html', {'course': course})
+    lectures = Lecture.objects.all().filter(course_id=course_id)
+    return render(request, 'courses/detail.html', {'course': course, 'lectures': lectures})
 
 
 def edit(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     return render(request, 'courses/edit.html', {'course': course})
+
+
+def delete_course(request, course_id):
+    if request.method == 'POST':
+        Course.objects.get(id=course_id).delete()
+    return redirect(reverse('Education:courses:list'))
 
 
 class CourseCreateView(CreateView):
@@ -38,3 +45,13 @@ class CourseUpdateView(UpdateView):
     def get_success_url(self, **kwargs):
         return reverse_lazy('Education:courses:detail',
                             kwargs={'course_id': self.object.id})
+
+
+class LectureCreateView(CreateView):
+    model = Lecture
+    fields = ['name', 'description', 'course']
+    template_name = 'courses/create_lecture.html'
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('Education:courses:detail',
+                            kwargs={'lecture.id': self.object.id})
