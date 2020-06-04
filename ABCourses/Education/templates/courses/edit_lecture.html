@@ -1,0 +1,10 @@
+{% extends "courses/base.html" %} {% block content %}
+
+<h4>Edit lecture</h4>
+
+<form method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" name="Edit" />
+</form>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "courses/base.html" %} {% block content %}
+
+
+
+{% if lecture.url %}
+
+<p style="text-align: center; vertical-align: middle;margin:40px 0px">
+<iframe width="660" height="400" src="{{ lecture.url }}" frameborder="0" allowfullscreen></iframe>
+</p>
+
+
+{% else %}
+
+This lecture has no video!
+
+{% endif %}
+
+
+{% endblock %}

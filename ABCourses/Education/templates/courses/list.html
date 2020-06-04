@@ -19,7 +19,7 @@
             <td style="text-align:center;">{{ course.level }}</td>
             <td style="text-align:center;">{{ course.description }}</td>
             <td style="text-align:center;"><a href="{% url 'Education:courses:edit' course.id %}"><button type="button" class="btn btn-info btn-sm">Edit</button></a></td>
-            <td style="text-align:center;"><form method="POST" action="{% url 'Education:courses:delete' course.id %}">{% csrf_token %}<button type=button class="btn btn-info btn-sm">Delete</button></form></td>
+            <td style="text-align:center;"><a href="{% url 'Education:courses:delete' course.id %}"><button type=button class="btn btn-info btn-sm">Delete</button></td>
         </tr>
     {% endfor %}
 </table>

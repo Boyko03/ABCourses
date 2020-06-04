@@ -12,6 +12,8 @@ courses_patterns = [
     path('<int:pk>/edit/', courses.CourseUpdateView.as_view(), name='edit'),
     path('delete/<int:course_id>/', courses.delete_course, name='delete'),
     path('<int:course_id>/new/', courses.LectureCreateView.as_view(), name='create_lecture'),
+    path('<int:course_id>/<int:lecture_id>/', courses.lecture_detail, name='lecture_detail'),
+    path('<int:course_id>/<int:pk>/edit/', courses.LectureUpdateView.as_view(), name='edit_lecture'),
 ]
 
 urlpatterns = [

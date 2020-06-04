@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.core.validators import URLValidator
 
 
 class BaseUser(models.Model):
@@ -34,13 +36,18 @@ class Course(models.Model):
     level = models.CharField(max_length=255, choices=LEVELS, default=BEGINER)
 
     def __str__(self):
-        return f'Course {self.name}'
+        return f'{self.name}'
 
 
 class Lecture(models.Model):
+    def youtube_validator(url):
+        if 'youtube.com' not in url:
+            raise ValidationError('not a YouTube link')
+
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
     course = models.ForeignKey('Course', on_delete=models.CASCADE)
+    url = models.URLField(validators=[URLValidator, youtube_validator])
 
     def __str__(self):
         return f'Lecture "{self.name}"'
