@@ -1,0 +1,37 @@
+{% extends "login/base.html" %} {% block content %}
+
+<div id="container">
+    <div id="header">
+        <h4>Sign in</h4>
+    </div>
+    <div id="content">
+        <div id="content-main">
+            <form method="post" validate>
+                {% csrf_token %}
+
+                {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field }}
+                {% endfor %}
+
+                {% for field in form.visible_fields %}
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary mb-3">Sign In</button>
+            </form>
+            <div class="mb-3">
+                <a href="{% url 'Education:register' %}">Don't have an account? Sign Up now!</a>
+            </div>
+        </div>
+        <br class="clear" />
+    </div>
+</div>
+
+{% endblock %}

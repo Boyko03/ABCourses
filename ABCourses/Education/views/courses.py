@@ -5,22 +5,35 @@ from django.urls import reverse_lazy, reverse
 from Education.models import Course, Lecture
 
 
+def login_required(func):
+    def inner(request, *args, **kwargs):
+        if not request.session.get('user_id'):
+            return redirect(reverse('Education:login'))
+        else:
+            return func(request, *args, **kwargs)
+    return inner
+
+
+@login_required
 def list(request):
     return render(request, 'courses/list.html',
                   {'courses': Course.objects.all()})
 
 
+@login_required
 def detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     lectures = Lecture.objects.all().filter(course_id=course_id)
     return render(request, 'courses/detail.html', {'course': course, 'lectures': lectures})
 
 
+@login_required
 def edit(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     return render(request, 'courses/edit.html', {'course': course})
 
 
+@login_required
 def delete_course(request, course_id):
     if request.method == 'POST':
         Course.objects.get(id=course_id).delete()
