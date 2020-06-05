@@ -4,34 +4,33 @@ from django.core.validators import URLValidator
 
 
 class BaseUser(models.Model):
-    user_id = models.AutoField(primary_key=True, unique=True)
-    user_name = models.CharField(max_length=250, unique=True)
-    user_email = models.EmailField(max_length=255)
-    user_password = models.TextField()
+    TEACHER = 'Teacher'
+    STUDENT = 'Student'
+    ROLES = [
+        (TEACHER, TEACHER),
+        (STUDENT, STUDENT)
+    ]
+    user_id = models.AutoField(primary_key=True, serialize=False, unique=True)
+    name = models.CharField(max_length=250, unique=True)
+    email = models.EmailField(max_length=255, unique=True)
+    password = models.CharField(max_length=255)
+    role = models.CharField(max_length=255, choices=ROLES, default=STUDENT)
 
     def __str__(self):
-        return f'User {self.user_name}'
-
-
-class Teacher(models.Model):
-    base_id = models.ForeignKey('BaseUser', on_delete=models.CASCADE)
-
-
-class Student(models.Model):
-    base_id = models.ForeignKey('BaseUser', on_delete=models.CASCADE)
+        return f'User {self.name}'
 
 
 class Course(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
     # rating = models.FloatField
-    BEGINER = 'B'
-    INTERMEDIATE = 'I'
-    ADVANCED = 'A'
+    BEGINER = 'Beginer'
+    INTERMEDIATE = 'Intermediate'
+    ADVANCED = 'Advanced'
     LEVELS = [
-        (BEGINER, 'Beginer'),
-        (INTERMEDIATE, 'Intermediate'),
-        (ADVANCED, 'Advanced')
+        (BEGINER, BEGINER),
+        (INTERMEDIATE, INTERMEDIATE),
+        (ADVANCED, ADVANCED)
     ]
     level = models.CharField(max_length=255, choices=LEVELS, default=BEGINER)
 
