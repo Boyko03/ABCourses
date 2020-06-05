@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from Education.views import index, courses
+from Education.views import index, courses, login
 
 app_name = 'Education'
 
@@ -19,4 +19,6 @@ courses_patterns = [
 urlpatterns = [
     path('', index, name='index'),
     path('courses/', include((courses_patterns, 'courses'))),
+    path('login/', login.log_user, name='login'),
+    path('register/', login.create_user, name='register')
 ]
